@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Túlélő – végtelen táj</title>
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:#9ec3e6;font-family:system-ui,sans-serif}
+  canvas{display:block}
+  #ov{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;
+      background:rgba(10,20,30,.55);color:#fff;text-align:center;cursor:pointer;line-height:1.7}
+  #ov small{opacity:.8}
+  #cross{position:fixed;left:50%;top:50%;width:6px;height:6px;margin:-3px;border-radius:50%;
+         background:#fff;mix-blend-mode:difference;pointer-events:none}
+</style>
+<script type="importmap">
+{"imports":{
+  "three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+</head>
+<body>
+<div id="cross"></div>
+<div id="hotbar" style="position:fixed;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:4px;pointer-events:none"></div>
+<div id="toasts" style="position:fixed;right:14px;top:38%;display:flex;flex-direction:column;align-items:flex-end;pointer-events:none"></div>
+<div id="ov"><b id="msg">Betöltés…</b><input id="name" maxlength="20" placeholder="Felhasználónév" autocomplete="off" style="margin:10px 0;padding:8px 12px;font:600 16px system-ui;border-radius:6px;border:2px solid #fff;background:rgba(0,0,0,.35);color:#fff;text-align:center;outline:none"><input id="pw" type="password" maxlength="100" placeholder="Jelszó (min. 6 karakter)" autocomplete="current-password" style="margin:10px 0;padding:8px 12px;font:600 16px system-ui;border-radius:6px;border:2px solid #fff;background:rgba(0,0,0,.35);color:#fff;text-align:center;outline:none;margin-top:0"><small style="opacity:.7">Új névvel új fiók jön létre.</small><small>WASD mozgás · Shift futás · Szóköz ugrás · Bal egér: fa kidöntése / kő törése (3 ütés) · Jobb egér: felvétel · 1–9: hotbar</small></div>
+<script type="module" src="game.js"></script>
+<script>
+  const show = t => { const m = document.getElementById('msg'); if (m) m.textContent = t; };
+  addEventListener('error', e => show('Hiba: ' + (e.message || ('nem tölthető be: ' + (e.target && (e.target.src || e.target.href))))), true);
+  addEventListener('unhandledrejection', e => show('Hiba: ' + ((e.reason && e.reason.message) || e.reason)));
+  setTimeout(() => {
+    const m = document.getElementById('msg');
+    if (!window.__started && m && m.textContent.startsWith('Betöltés…'))
+      show('A játék kódja nem indult el – nyisd meg helyi szerverről (nem file://), és nézd az F12 konzolt.');
+  }, 4000);
+  show('Betöltés… (' + location.protocol + ')');
+</script>
+</body>
+</html>

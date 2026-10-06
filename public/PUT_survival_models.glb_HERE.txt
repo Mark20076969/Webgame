@@ -1,0 +1,2 @@
+Ide kerül a survival_models.glb fájl (a Blenderben a tools/build_model_library.py futtatásával készül).
+Ennek a fájlnak "survival_models.glb" néven kell az index.html mellett lennie. Ezt a txt-t utána törölheted.
